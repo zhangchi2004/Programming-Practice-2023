@@ -1,0 +1,231 @@
+<head>
+    <meta charset="UTF-8">
+
+    
+    <style>
+          body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+          }
+      
+          
+          .topbuttons {
+              background-color:#4A90E2;
+              color: #fff;
+              text-align: center;
+              height: 70px;
+              padding:0 0 0 0;
+              display: flex;
+          }
+      
+          .topbuttons a {
+            display: flex;
+            margin: 0;
+            width:140px;
+            height:70px;
+            justify-content:center;
+            align-items: center;
+            color: #fff;
+            text-decoration: none;
+            font-size:20px;
+          }
+          
+          .topbuttons .currentplace {
+            display: flex;
+            width:140px;
+            margin:0;
+            height:70px;
+            align-items: center;
+            justify-content:center;
+            background-color:#0047AB;
+            color: #fff;
+            text-decoration: none;
+            font-size:20px;
+            word-spacing: 6px;
+          }
+          .topbuttons a:hover {
+            background-color: #007BFF;
+            color: #fff;
+            transition: background-color 0.3s, color 0.3s;
+          }
+          
+        
+          .button {
+            display: block;
+            margin: 0 auto;
+            padding: 10px 20px;
+            background-color: #4A90E2;
+            color: #fff;
+            font-weight: bold;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+          }
+        
+          .item {
+            background-color: #f5f5f5;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin: 10px auto; 
+            border-radius: 5px;
+            max-width:700px;
+            text-align: left;
+            transition: background-color 0.3s;
+          }
+        
+          .item a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            font-size: 18px;
+          }
+      
+          .item div {
+            margin-top: 5px;
+            font-size: 14px;
+            color: #777;
+          }
+      
+          .item .comment-count,
+          .item .hot {
+            font-weight: bold;
+            color: #e74c3c; 
+          }
+        
+          .item .intro {
+            margin-top: 10px;
+            font-size: 16px;
+            color: #555;
+          }
+          .item a:hover{
+            text-decoration: underline;
+          }
+          .item:hover {
+            background-color: #ddd;
+          }
+          body {
+            background-image: url('media/images/background.jpg'); 
+            background-size: cover; 
+            background-repeat: no-repeat; 
+            background-attachment: fixed;
+          }
+
+
+
+        .pagination {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .pagination a, .pagination .button {
+            display: inline-block;
+            padding: 5px 15px; 
+            margin: 0 5px;
+            text-decoration: none;
+            background-color: #fff;
+            color: #007BFF; 
+            border: 2px solid #007BFF;
+            border-radius: 5px;
+        }
+
+        .pagination .current-page {
+            display: inline-block;
+            padding: 5px 15px; 
+            margin: 0 5px;
+            background-color: #007BFF;
+            color: #fff;
+            border: 2px solid #007BFF;
+            border-radius: 5px;
+        }
+
+        .totalpages {
+            margin-top: 10px; 
+            font-size: 14px;
+            color: #fff;
+        }
+
+        .pagination .input {
+            width: 50px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .pagination a {
+            text-decoration: none;
+        }
+        .pagination form{
+            margin-top: 10px; 
+        }
+        .pagination a:hover, .pagination .button:hover {
+            background-color: #007BFF;
+            color: #fff;
+            transition: background-color 0.3s, color 0.3s; 
+        }
+
+    </style> 
+</head>
+
+<body>
+    <div class="topbuttons">
+        <a href="/home">首 页</a>
+        <div class="currentplace">列 表</div>
+        <a href="/classes">分 组</a>
+        <a href="/search">搜 索</a>
+    </div>
+    <div class="listnews">
+        {%for blog in current_page%}
+        <div class='item'>
+      
+            <a href="/index/blog/{{blog.id}}">{{blog.title}}</a>
+            <div>发布时间：{{blog.pub_date}}， 作者：{{blog.author}}</div>
+            <div>评论数：{{blog.comment_count}}， 热度：{{blog.hot}}</div>
+            <div>摘要：{{blog.intro}}……</div>
+            
+        </div>
+        {%endfor%}
+    </div>
+
+
+    <div class="pagination">
+        <a href="?page=1">首页</a>
+        {% if current_page.has_previous %}
+            <a href="?page={{ current_page.previous_page_number }}">前一页</a>
+        {% endif %}
+        
+        {% for page in current_page.paginator.page_range %}
+            {% if page == current_page.number %}
+                <span class="current-page">{{ page }}</span>
+            {% elif page > current_page.number|add:"-3" and page < current_page.number|add:"3" %}
+                <a href="?page={{ page }}">{{ page }}</a>
+            {% endif %}
+        {% endfor %}
+        
+        {% if current_page.has_next %}
+            <a href="?page={{ current_page.next_page_number }}">后一页</a>            
+        {% endif %}
+        <a href="?page={{ current_page.paginator.num_pages }}">尾页</a>
+        
+        
+        <div class = totalpages>共{{ current_page.paginator.num_pages }}页</div>
+        
+        <form method="GET">
+            <input type="number" class="input" name="page" value="{{ current_page.number }}" min="1" max="{{ current_page.paginator.num_pages }}">
+            <input type="submit" class="button" value="跳转">
+        </form> 
+
+    </div>
+    
+    
+
+    
+    
+    
+    
+    
+    
+    </body>
+    
+    </html>

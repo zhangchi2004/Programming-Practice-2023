@@ -1,0 +1,163 @@
+<head>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+      }
+  
+      
+      .topbuttons {
+          background-color:#4A90E2;
+          color: #fff;
+          text-align: center;
+          height: 70px;
+          padding:0 0 0 0;
+          display: flex;
+      }
+  
+      .topbuttons a {
+        display: flex;
+        margin: 0;
+        width:140px;
+        height:70px;
+        justify-content:center;
+        align-items: center;
+        color: #fff;
+        text-decoration: none;
+        font-size:20px;
+      }
+      .topbuttons .currentplace {
+        display: flex;
+        width:140px;
+        margin:0;
+        height:70px;
+        align-items: center;
+        justify-content:center;
+        background-color:#0047AB;
+        color: #fff;
+        text-decoration: none;
+        font-size:20px;
+        word-spacing: 6px;
+      }
+      .topbuttons a:hover {
+        background-color: #007BFF;
+        color: #fff;
+        transition: background-color 0.3s, color 0.3s;
+      }
+      .twosets{
+        display:flex;
+        flex-direction:column;
+      }
+      .content{
+        display:flex;
+        align-items:center;
+      }
+
+    .fieldset {
+        background-color:fff;
+        display:flex;
+        width:200px;
+        flex-direction: column;
+        border: 1px solid #ddd;
+        padding: 10px;
+        margin: 15px;
+        border-radius: 5px;
+    }
+    .sbcontainer{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      height: 100%;
+      width:80%;
+    }
+    .searchbox{
+      width: 70%; 
+      height: 15%; 
+      display:flex;
+      margin:50px;
+      
+    }
+    
+    input[type="radio"], input[type="checkbox"] {
+        margin-right: 5px;
+    }
+
+    input[type="text"] {
+        width: 100%;
+        padding: 10px;
+        font-size: 18px;
+        border: 1px solid #ddd;
+        border-radius: 5px 0 0 5px;
+    }
+
+    input[type="submit"] {
+        background-color: #4285f4;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        font-size:15px;
+        border-radius: 0 5px 5px 0;
+    }
+
+    input[type="submit"]:hover {
+        background-color: #fff;
+        color: #357db7;
+        transition: background-color 0.3s, color 0.3s;
+    }
+    body {
+      background-image: url('media/images/background.jpg'); 
+      background-size: cover; 
+      background-repeat: no-repeat; 
+      background-attachment: fixed;
+    }
+    .choice{
+      margin:10px;
+    }
+    
+    </style>
+</head>
+
+<body>
+<div class='topbuttons'>
+    <a href="/home">首 页</a>
+    <a href="/list?page=1">列 表</a>
+    <a href="/classes">分 组</a>
+    <div class="currentplace">搜 索</div>
+</div>
+<div class="contentcontainer">
+  <form action="/result" method="get" class="content">
+    <div class="twosets">
+      <div class="fieldset">
+        <div>选择排序方式</div>
+        <div class="choice">
+          <input type="radio" name="order" value="by_time" checked/>按照时间排序（查找结果包含输入的全部内容）
+        </div>
+      
+        <div class="choice">
+          <input type="radio" name="order" value="by_hot" />按照热度排序（查找结果包含输入的全部内容）
+        </div>
+        <div class="choice">
+          <input type="radio" name="order" value="by_match" />按照匹配度排序（分词进行模糊查找，返回匹配度最高的前200条）
+        </div>
+      </div>
+      <div class="fieldset">
+          <div>选择搜索范围（默认为全部时间）</div>
+          
+          <div class="choice"><input type="checkbox" value="selected" name="class1"/>近三天</div>
+          
+          <div class="choice"><input type="checkbox" value="selected" name="class2"/>近一周</div>
+          <div class="choice"><input type="checkbox" value="selected" name="class3"/>一周之前</div>
+      </div>
+    </div>
+    <div class="sbcontainer">
+      
+      <div class="searchbox">
+        <input type="text" name="keys">
+        <input type="submit" value="搜索">
+      </div>
+    </div>
+  </form>
+</div>
+<body>

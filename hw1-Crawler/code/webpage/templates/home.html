@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <style>
+
+
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    
+    .topbuttons {
+        background-color:#4A90E2;
+        color: #fff;
+        text-align: center;
+        height: 70px;
+        padding:0 0 0 0;
+        display: flex;
+    }
+
+    .topbuttons a {
+      display: flex;
+      margin: 0;
+      width:140px;
+      height:70px;
+      justify-content:center;
+      align-items: center;
+      color: #fff;
+      text-decoration: none;
+      font-size:20px;
+    }
+    .topbuttons .currentplace {
+      display: flex;
+      width:140px;
+      margin:0;
+      height:70px;
+      align-items: center;
+      justify-content:center;
+      background-color:#0047AB;
+      color: #fff;
+      text-decoration: none;
+      font-size:20px;
+      word-spacing: 6px;
+    }
+    .topbuttons a:hover {
+      background-color: #007BFF;
+      color: #fff;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    
+  
+    .button {
+      display: block;
+      margin: 0 auto;
+      padding: 10px 20px;
+      background-color: #4A90E2;
+      color: #fff;
+      font-weight: bold;
+      font-size: 16px;
+      border: 2px solid white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .button:hover{
+      color: #4A90E2;
+      background-color: #fff;
+      transition: background-color 0.3s, color 0.3s;
+    }
+  
+    .item {
+      background-color: #f5f5f5;
+      border: 1px solid #ddd;
+      padding: 10px;
+      margin: 10px auto; 
+      border-radius: 5px;
+      max-width:700px;
+      text-align: left;
+      transition: background-color 0.3s;
+    }
+  
+    .item a {
+      text-decoration: none;
+      color: #333;
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    .item div {
+      margin-top: 5px;
+      font-size: 14px;
+      color: #777;
+    }
+
+    .item .comment-count,
+    .item .hot {
+      font-weight: bold;
+      color: #e74c3c; 
+    }
+  
+    .item .intro {
+      margin-top: 10px;
+      font-size: 16px;
+      color: #555;
+    }
+    .item a:hover{
+      text-decoration: underline;
+    }
+    .item:hover {
+      background-color: #ddd;
+    }
+    body {
+      background-image: url('media/images/background.jpg'); 
+      background-size: cover; 
+      background-repeat: no-repeat; 
+      background-attachment: fixed;
+    }
+
+    .titlecontainer {
+      text-align: center;
+      padding: 20px;
+      width:250px;
+      border-radius: 5px;
+      background-color: white; 
+      border: 2px solid white; 
+      margin: 20px auto;
+    }
+
+    
+    .title {
+      text-align: center;
+      font-size: 28px;
+    }
+  
+    
+  </style> 
+</head>
+<body>
+  <div class='topbuttons'>
+    <div class='currentplace'>首 页</div>
+    <a href="/list?page=1">列 表</a>
+    <a href="/classes">分 组</a>
+    <a href="/search">搜 索</a>
+  </div>
+  <div class="titlecontainer">
+  <div class='title'>\\ 新浪科技新闻 //</div>
+  </div>
+  <form action="/home" method="post">
+    {% csrf_token %}
+    <input type="submit" value="refresh" class="button">
+  </form>
+  {%for blog in random_blogs%}
+    <div class='item'>
+      
+      <a href="/index/blog/{{blog.id}}">{{blog.title}}</a>
+      <div>发布时间：{{blog.pub_date}}， 作者：{{blog.author}}</div>
+      <div>评论数：{{blog.comment_count}}， 热度：{{blog.hot}}</div>
+      <div>摘要：{{blog.intro}}……</div>
+      
+    </div>
+  {%endfor%}
+</body>
+
+</html>
+

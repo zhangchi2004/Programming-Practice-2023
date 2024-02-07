@@ -1,0 +1,145 @@
+<head>
+    <meta charset="UTF-8">
+  
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+      }
+  
+      
+      .topbuttons {
+          background-color:#4A90E2;
+          color: #fff;
+          text-align: center;
+          height: 70px;
+          padding:0 0 0 0;
+          display: flex;
+      }
+  
+      .topbuttons a {
+        display: flex;
+        margin: 0;
+        width:140px;
+        height:70px;
+        justify-content:center;
+        align-items: center;
+        color: #fff;
+        text-decoration: none;
+        font-size:20px;
+      }
+      .topbuttons .currentplace {
+        display: flex;
+        width:140px;
+        margin:0;
+        height:70px;
+        align-items: center;
+        justify-content:center;
+        background-color:#0047AB;
+        color: #fff;
+        text-decoration: none;
+        font-size:20px;
+        word-spacing: 6px;
+      }
+      .topbuttons a:hover {
+        background-color: #007BFF;
+        color: #fff;
+        transition: background-color 0.3s, color 0.3s;
+      }
+      
+    
+    .buttoncontainer{
+      justify-content: space-between; 
+      width:200px;
+      height:300px;
+      margin:30px;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 88vh;
+      margin: 0;
+    }
+
+    .button {
+        padding: 10px 40px;
+        background-color: #fff;
+        color: #3498db;
+        border: 2px solid #3498db;
+        cursor: pointer;
+        transition: background-color 0.3s, color 0.3s;
+        font-size:25px;
+        text-align: center;
+        text-decoration: none;
+        height: 50%;
+        width:100%;
+        border-radius:15px 15px 0 0;
+    }
+    .classinfo{
+      text-align: center;
+      align-items: center;
+      display:flex;
+      height:110px;
+      width:160px;
+      background-color: #3498db;
+      color: #fff;
+      font-size:20px;
+      padding: 20px;
+      border-radius:0 0 15px 15px;
+    }
+
+    .button:hover {
+        background-color: #3498db;
+        color: #fff;
+    }
+    
+    
+      
+    form{
+      margin:0;
+    }
+    
+      body {
+        background-image: url('media/images/background.jpg'); 
+        background-size: cover; 
+        background-repeat: no-repeat; 
+        background-attachment: fixed;
+      }
+      
+    </style> 
+</head>
+<body>
+  <div class='topbuttons'>
+    <a href="/home">首 页</a>
+    <a href="/list?page=1">列 表</a>
+    <div class='currentplace'>分 组</div>
+    <a href="/search">搜 索</a>
+  </div>
+  <div class='buttons'>
+    <div class='buttoncontainer'>
+      <form action="classes/1?page=1" method="post">
+          {%csrf_token%}
+          <input type="submit" value="近三天" class="button">
+      </form>
+      <div class="classinfo">近三天（8.28往前到8.26，共113条新闻）</div>
+    </div>
+    <div class='buttoncontainer'>
+      <form action="classes/2?page=1" method="post">
+        {%csrf_token%}
+        <input type="submit" value="近一周" class="button">
+      </form>
+      <div class="classinfo">近一周（不含近三天的新闻，8.25往前到8.22，共678条新闻）</div>
+    </div>
+    <div class='buttoncontainer'>
+      <form action="classes/3?page=1" method="post">
+        {%csrf_token%}
+        <input type="submit" value="一周之前" class="button">
+      </form>
+      <div class="classinfo">一周之前（8.21及更早，共4209条）</div>
+    </div>
+  <div>
+  </div>
+</body>

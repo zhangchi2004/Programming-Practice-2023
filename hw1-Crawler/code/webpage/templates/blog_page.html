@@ -1,0 +1,235 @@
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+          }
+      
+          
+          .topbuttons {
+              background-color:#4A90E2;
+              color: #fff;
+              text-align: center;
+              height: 70px;
+              padding:0 0 0 0;
+              display: flex;
+          }
+      
+          .topbuttons a {
+            display: flex;
+            margin: 0;
+            width:140px;
+            height:70px;
+            justify-content:center;
+            align-items: center;
+            color: #fff;
+            text-decoration: none;
+            font-size:20px;
+          }
+          .topbuttons .currentplace {
+            display: flex;
+            width:140px;
+            margin:0;
+            height:70px;
+            align-items: center;
+            justify-content:center;
+            background-color:#0047AB;
+            color: #fff;
+            text-decoration: none;
+            font-size:20px;
+            word-spacing: 6px;
+          }
+          .topbuttons a:hover {
+            background-color: #007BFF;
+            color: #fff;
+            transition: background-color 0.3s, color 0.3s;
+          }
+          
+        
+        
+          
+          
+        .artibody {
+            background-color: #fff;
+            margin: 20px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .content p {
+            font-size: 20px;
+            line-height: 1.6;
+        }
+        .title {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .meta {
+            font-size: 14px;
+            color: #777;
+            margin-bottom: 20px;
+        }
+        
+        .img_wrapper {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .img_wrapper img {
+            max-width: 100%;
+            height: auto;
+            margin: 10px 0;
+        }
+        
+        .img_desc {
+            font-style: italic;
+            color: #777;
+        }
+        
+        .infos {
+            margin-top: 20px;
+        }
+        
+        .info {
+            font-size: 14px;
+            color: #777;
+            margin-right: 20px;
+        }
+        
+        .comments {
+            margin-top: 20px;
+        }
+        
+        .onecomment {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 10px;
+            background-color: #f9f9f9;
+        }
+    
+        .onecommentcontent {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+    
+        .onecommenttime {
+            font-size: 12px;
+            color: #777;
+        }
+    
+        .onecommentdel {
+            margin-top: 5px;
+        }
+    
+        .del {
+            background-color: #ff5555;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    
+        .del:hover {
+            background-color: #ff0000;
+        }
+        .cmtbox {
+            background-color: #f9f9f9;
+            padding: 10px;
+            border: 1px solid #ccc;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+    
+        .inbox {
+            margin-bottom: 10px;
+        }
+    
+        .commentbox {
+            width: 100%;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            height:100px;
+        }
+    
+        .submitcomment {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    
+        .submitcomment:hover {
+            background-color: #0056b3;
+        }
+
+
+    </style> 
+</head>
+<body>
+<div class='topbuttons'>
+    <a href="/home">首 页</a>
+    <a href="/list?page=1">列 表</a>
+    <a href="/classes">分 组</a>
+    <a href="/search">搜 索</a>
+</div>
+
+
+<div class="artibody">
+    <div class="title"> {{ title }} </div>
+    <div class="content">
+        <div class="author">{{author}}</div>
+        <div class="date">{{pub_date}}</div>
+        
+        {% if paras %}
+            <div>
+                {%for para in paras%}
+                    {%if para.text_para%}
+                        <p>{{para.text_para.text}}</p>
+                    {%else%}
+                        <div class="img_wrapper">
+                            <img src={{para.img_para.image.url}}>
+                            <span class="img_desc">{{para.img_para.img_desc}}</span>
+                        </div>
+                    {%endif%}
+                {%endfor%}
+            </div>
+        {%endif%}
+        </div>
+    <div class="infos">
+        <a class="info" href={{link}}>{{link}}</a>
+        <div class="info">热度：{{hot}}</div>
+        <div class="info">评论数：{{comment_count}}</div>
+        
+    <div class="comments">
+        {% if comments %}
+        <div>
+            {% for comment in comments %}
+            <div class="onecomment">
+                <p class='onecommentcontent'>{{ comment.user }} : {{ comment.comment_content }}  </p>
+                <p class='onecommenttime'> {{comment.time}}</p>
+                <form action="/index/delcomment/{{ comment.id }}" method="post" class="onecommentdel">
+                    {% csrf_token %}
+                    <input type="submit" value="删除" class="del">
+                </form>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+            <p>暂无评论</p>
+        {% endif %}
+        </div>
+</div>
+<form action="/index/comment/{{ blog_id }}" method="post" class="cmtbox">
+    {% csrf_token %}
+    <div class="inbox">请输入用户名<input type="text" name="user"></div>
+    <div class="inbox">输入你的评论：<input type="text" name="content" class="commentbox"></div>
+    <input type="submit" value="comment" class="submitcomment">
+</form>
+</body>
